@@ -23,7 +23,7 @@
     </filter>
     <filter-mapping>
         <filter-name>encoding</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>*.action</url-pattern>
     </filter-mapping>
 
 <!--    配置wpringmvc 的中央调度器-->
@@ -49,4 +49,7 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:applicationContext-*.xml</param-value>
     </context-param>
+    <welcome-file-list>
+        <welcome-file>admin/login.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

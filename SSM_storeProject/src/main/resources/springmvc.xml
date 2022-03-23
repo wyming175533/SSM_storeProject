@@ -11,7 +11,7 @@
 
 <!--    视图解析器 IRVR-->
     <bean id="ResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/admain/"/>
+        <property name="prefix" value="/admin/"/>
         <property name="suffix" value=".jsp"/>
      </bean>
 <!--    文件上传器 CRM-->

@@ -69,7 +69,7 @@
     <div id="table">
 
         <c:choose>
-            <c:when test="${info.list.size()!=0}">
+            <c:when test="${list.size()!=0}">
 
                 <div id="top">
                     <input type="checkbox" id="all" onclick="allClick()" style="margin-left: 50px">&nbsp;&nbsp;全选
@@ -93,7 +93,7 @@
                             <th>商品数量</th>
                             <th>操作</th>
                         </tr>
-                        <c:forEach items="${info.list}" var="p">
+                        <c:forEach items="${list}" var="p">
                             <tr>
                                 <td valign="center" align="center"><input type="checkbox" name="ck" id="ck" value="${p.pId}" onclick="ckClick()"></td>
                                 <td>${p.pName}</td>
