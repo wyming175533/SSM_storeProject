@@ -11,7 +11,6 @@
     <script type="text/javascript">
         if ("${msg}" != "") {
             alert("${msg}");
-            ${msg}="";
         }
     </script>
 
@@ -27,7 +26,7 @@
 </head>
 <script type="text/javascript">
     function allClick() {
-        //取得全选复选框的选中未选 中状态
+        //取得全选复选框的选中未选 中状态.prop
         var ischeck=$("#all").prop("checked");
         //将此状态赋值给每个商品列表里的复选框
         $("input[name=ck]").each(function () {
@@ -184,6 +183,7 @@
     function deleteBatch() {
 
             //取得所有被选中删除商品的pid
+            var page="${info.pageNum}";
             var zhi=$("input[name=ck]:checked");
             var str="";
             var id="";
@@ -196,14 +196,32 @@
                     $.each(zhi,function (index,item) {
 
                         id=$(item).val(); //22 33
-                        alert(id);
+                       // alert(id);
                         if(id!=null)
                             str += id+",";  //22,33,44
                     });
-alert(str+"11111111");
+//alert(str+"11111111");
                     //发送请求到服务器端
                    // window.location="${pageContext.request.contextPath}/prod/deletebatch.action?str="+str;
+                    $.ajax({
+                        url:"${pageContext.request.contextPath}/prod/deletebatch.action",
+                        data:{
+                            "str":str,
+                            "page":page
+                        },
+                        type:"post",
+                        dataType: "text",
+                        success:function (data){
+                            //返回删除结果信息
+                            alert(data);
+                            //刷新table页面
+                            $("#table").load("http://localhost:8080/SSM_storeProject/admin/product.jsp #table");
 
+                        }
+
+
+
+                    })
                 }
         }
     }

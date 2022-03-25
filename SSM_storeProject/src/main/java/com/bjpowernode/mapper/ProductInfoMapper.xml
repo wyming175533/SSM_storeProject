@@ -255,4 +255,34 @@
       p_date = #{pDate,jdbcType=DATE}
     where p_id = #{pId,jdbcType=INTEGER}
   </update>
+
+  <delete id="deleteBatch">
+    delete from product_info where p_id in
+    <foreach collection="array" separator="," open="(" close=")" item="pid">
+      #{pid}
+    </foreach>
+  </delete>
+
+
+  <select id="selectByEdition" resultMap="BaseResultMap" parameterType="com.bjpowernode.vo.SelectVo">
+    select <include refid="Base_Column_List"></include> from product_info
+    <where>
+      <if test="pname!=null and pname!=''">
+        and p_name like '%${pname}%'
+      </if>
+      <if test="typeid!=null and typeid!=''">
+        and type_id =#{typeid}
+      </if>
+      <if test="(lprice!=null and lprice!='') and  (hprice==null or hprice=='')">
+        and p_price &gt;=#{lprice}
+      </if>
+      <if test="(hprice!=null and hprice!='') and  (lprice==null or lprice=='')">
+        and p_price &lt;=#{hprice}
+      </if>
+      <if test="(hprice!=null and hprice!='') and  (lprice!=null and lprice!='')">
+        and p_price between #{lprice} and #{hprice}
+      </if>
+    </where>
+    order by p_id desc
+  </select>
 </mapper>

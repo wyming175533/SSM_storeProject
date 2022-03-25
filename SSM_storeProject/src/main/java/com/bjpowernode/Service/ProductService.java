@@ -16,4 +16,6 @@ public interface ProductService {
     int updateById(ProductInfo productInfo);
 
     int delete(int pid);
+
+    int deletebatch(String[] ids);
 }

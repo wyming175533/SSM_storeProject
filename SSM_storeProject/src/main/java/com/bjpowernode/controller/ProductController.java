@@ -157,6 +157,31 @@ public class ProductController {
         return mv;
     }
 
+    @RequestMapping("/deletebatch.action")
+    public ModelAndView deletebatch(String str,int page){
+        ModelAndView mv=new ModelAndView();
+        String ids[]=str.split(",");
+
+        int num=-1;
+        try {
+            num=productService.deletebatch(ids);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(num>0){
+            mv.addObject("msg","删除成功");
+            mv.setViewName("forward:/prod/deleteAjaxsplit.action?page="+page);
+        }
+        else{
+            mv.addObject("msg","删除失败");
+            mv.setViewName("forward:/prod/deleteAjaxsplit.action?page="+page);
+
+        }
+
+
+        return mv;
+    }
+
     @ResponseBody
     @RequestMapping(value="/deleteAjaxsplit.action",produces = "text/html;charset=utf-8")
     public Object deleteAjaxsplit(int page, HttpSession session,HttpServletRequest request){

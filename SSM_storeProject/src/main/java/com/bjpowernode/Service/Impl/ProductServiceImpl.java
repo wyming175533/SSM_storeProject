@@ -64,4 +64,11 @@ public class ProductServiceImpl implements ProductService {
         return num;
     }
 
+    @Override
+    public int deletebatch(String[] ids) {
+        int num=productInfoMapper.deleteBatch(ids);
+
+        return num;
+    }
+
 }
