@@ -59,7 +59,7 @@
 				<form action="${pageContext.request.contextPath}/prod/update.action" enctype="multipart/form-data" method="post" id="myform">
 					<input type="hidden" value="${prod.pId}" name="pId">
 					<input type="hidden" value="${prod.pImage}" name="pImage">
-					<input type="hidden" value="${page}" name="page">
+					<input type="hidden" value="${vo.page}" name="page">
 					<table>
 						<tr>
 							<td class="one">商品名称</td>
@@ -88,7 +88,7 @@
 							<td class="four"></td>
 							<td><span id="priceerr"></span></td>
 						</tr>
-						
+
 						<tr>
 							<td class="one">图片介绍</td>
 							<td> <br><div id="imgDiv" style="display:block; width: 40px; height: 50px;"><img src="${pageContext.request.contextPath}/image_big/${prod.pImage}" width="100px" height="100px" ></div><br><br><br><br>
@@ -101,7 +101,7 @@
 							<td class="four"></td>
 							<td><span></span></td>
 						</tr>
-						
+
 						<tr>
 							<td class="one">总数量</td>
 							<td><input type="number" name="pNumber" class="two"  value="${prod.pNumber}"></td>
@@ -111,8 +111,8 @@
 							<td class="four"></td>
 							<td><span id="numerr"></span></td>
 						</tr>
-						
-						
+
+
 						<tr>
 							<td class="one">类别</td>
 							<td>

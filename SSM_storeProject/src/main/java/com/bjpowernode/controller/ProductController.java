@@ -3,6 +3,7 @@ package com.bjpowernode.controller;
 import com.bjpowernode.Service.ProductService;
 import com.bjpowernode.pojo.ProductInfo;
 import com.bjpowernode.utils.FileNameUtil;
+import com.bjpowernode.vo.SelectVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.sun.org.apache.xpath.internal.operations.Mod;
@@ -10,6 +11,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,10 +38,20 @@ public class ProductController {
         mv.setViewName("product");
         return mv;
     }
+
     @RequestMapping(value = "/split.action")
-    public ModelAndView pageSplit(int page){
+    public ModelAndView pageSplit(HttpSession session){
+        PageInfo pageInfo=null;
+        SelectVo vo= (SelectVo) session.getAttribute("vo");
         ModelAndView mv=new ModelAndView();
-        PageInfo pageInfo=productService.pageSplit(page,PAGE_SIZE);
+        if(vo!=null){
+           pageInfo=productService.PageSplit(vo,PAGE_SIZE);
+           session.removeAttribute("vo");
+            System.out.println("1!!!!!!!!!!!!!!!!!!!!!");
+        }else{
+            pageInfo=productService.pageSplit(1,PAGE_SIZE);
+            System.out.println("2!!!!!!!!!!!!!!!!!!!!!");
+        }
         mv.addObject("info",pageInfo);
         mv.setViewName("product");
 
@@ -47,8 +59,9 @@ public class ProductController {
     }
     @ResponseBody
     @RequestMapping("/ajaxsplit.action")
-    public void ajaxsplit(int page, HttpSession session){
-        PageInfo pageInfo=productService.pageSplit(page,PAGE_SIZE);
+    public void ajaxsplit(SelectVo vo, HttpSession session){
+
+        PageInfo pageInfo=productService.PageSplit(vo,PAGE_SIZE);
         session.setAttribute("info",pageInfo);
 
     }
@@ -102,18 +115,18 @@ public class ProductController {
         return mv;
     }
     @RequestMapping("/one.action")
-    public ModelAndView one(int pid,int page,HttpServletRequest request){
+    public ModelAndView one(int pid,SelectVo vo,HttpServletRequest request){
         ModelAndView mv=new ModelAndView();
         ProductInfo productInfo=productService.getInfoById(pid);
 
+        request.getSession().setAttribute("vo",vo);
         mv.addObject("prod",productInfo);
-        mv.addObject("page",page);
-       mv.addObject("msg","");
         mv.setViewName("update");
         return mv;
     }
-    @RequestMapping("/update.action")
+    @RequestMapping(value = "/update.action",method = RequestMethod.POST)
     public ModelAndView update(ProductInfo productInfo,int page){
+        System.out.println("update/////////////////////");
         ModelAndView mv=new ModelAndView();
         if(!"".equals(SaveFilename)){
             productInfo.setpImage(SaveFilename);
@@ -126,11 +139,12 @@ public class ProductController {
         }
         if(num>0){
             mv.addObject("msg","更新成功");
-            mv.setViewName("forward:/prod/split.action?page="+page);
+            mv.setViewName("forward:/prod/split.action");
+            System.out.println("split................");
         }
         else{
             mv.addObject("msg","更新失败");
-            //  mv.setViewName("forward:prod/split.action");
+            mv.setViewName("forward:/prod/split.action");
 
         }
         return mv;
@@ -188,6 +202,12 @@ public class ProductController {
         PageInfo pageInfo=productService.pageSplit(page,PAGE_SIZE);
         session.setAttribute("info",pageInfo);
         return request.getAttribute("msg");
+    }
+    @ResponseBody
+    @RequestMapping("/SelectByCondition.action")
+    public void selectByEdition(SelectVo vo,HttpSession session){
+        List<ProductInfo> list=productService.SelectByEdition(vo);
+        session.setAttribute("list",list);
     }
     
 }

@@ -63,7 +63,7 @@
             </c:forEach>
         </select>&nbsp;&nbsp;&nbsp;
             价格：<input name="lprice" id="lprice">-<input name="hprice" id="hprice">
-            <input type="button" value="查询" onclick="ajaxsplit(${info.pageNum})">
+            <input type="button" value="查询" onclick="ajaxsplit()">
         </form>
     </div>
     <br>
@@ -247,17 +247,33 @@
         }
     }
 
-    function one(pid, ispage) {
-        location.href = "${pageContext.request.contextPath}/prod/one.action?pid=" + pid + "&page=" + ispage;
+    function one(pid, page) {
+        var pname=$("#pname").val();
+        var typeid=$("#typeid").val();
+        var lprice=$("#lprice").val();
+        var hprice=$("#hprice").val();
+        str="?pid="+pid+"&page="+page+"&pname="+pname+"&typeid="+typeid+"&lprice="+lprice+"&hprice=&"+hprice;
+        location.href = "${pageContext.request.contextPath}/prod/one.action"+str;
     }
 </script>
 <!--分页的AJAX实现-->
 <script type="text/javascript">
+
     function ajaxsplit(page) {
         //异步ajax分页请求
+        var pname=$("#pname").val();
+        var typeid=$("#typeid").val();
+        var lprice=$("#lprice").val();
+        var hprice=$("#hprice").val();
         $.ajax({
         url:"${pageContext.request.contextPath}/prod/ajaxsplit.action",
-            data:{"page":page},
+            data:{
+                "page":page,
+                "pname":pname,
+                "typeid":typeid,
+                "lprice":lprice,
+                "hprice":hprice
+            },
             type:"post",
             success:function () {
                 //重新加载分页显示的组件table
@@ -266,6 +282,7 @@
             }
         })
     };
+
 
 </script>
 

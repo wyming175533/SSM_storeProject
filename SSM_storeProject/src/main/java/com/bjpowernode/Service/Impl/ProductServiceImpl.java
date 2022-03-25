@@ -5,6 +5,7 @@ import com.bjpowernode.mapper.ProductInfoMapper;
 import com.bjpowernode.pojo.ProductInfo;
 import com.bjpowernode.pojo.ProductInfoExample;
 import com.bjpowernode.pojo.ProductTypeExample;
+import com.bjpowernode.vo.SelectVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,18 @@ public class ProductServiceImpl implements ProductService {
         int num=productInfoMapper.deleteBatch(ids);
 
         return num;
+    }
+
+    @Override
+    public List<ProductInfo> SelectByEdition(SelectVo vo) {
+        return productInfoMapper.selectByEdition(vo);
+    }
+
+    @Override
+    public PageInfo<ProductInfo> PageSplit(SelectVo vo, int pageSize) {
+        PageHelper.startPage(vo.getPage(),pageSize);
+        PageInfo<ProductInfo> info=new PageInfo(productInfoMapper.selectByEdition(vo));
+        return info;
     }
 
 }

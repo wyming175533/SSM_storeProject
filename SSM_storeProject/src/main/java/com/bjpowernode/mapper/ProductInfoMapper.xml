@@ -270,7 +270,7 @@
       <if test="pname!=null and pname!=''">
         and p_name like '%${pname}%'
       </if>
-      <if test="typeid!=null and typeid!=''">
+      <if test="typeid!=null and typeid!=-1">
         and type_id =#{typeid}
       </if>
       <if test="(lprice!=null and lprice!='') and  (hprice==null or hprice=='')">

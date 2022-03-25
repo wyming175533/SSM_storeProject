@@ -2,8 +2,10 @@ package com.bjpowernode.Service.Impl;
 
 import com.bjpowernode.Service.ProductTypeService;
 import com.bjpowernode.mapper.ProductTypeMapper;
+import com.bjpowernode.pojo.ProductInfo;
 import com.bjpowernode.pojo.ProductType;
 import com.bjpowernode.pojo.ProductTypeExample;
+import com.bjpowernode.vo.SelectVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,4 +20,6 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         List<ProductType> list=productTypeMapper.selectByExample(productTypeExample);
         return list;
     }
+
+
 }

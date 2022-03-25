@@ -1,6 +1,7 @@
 package com.bjpowernode.Service;
 
 import com.bjpowernode.pojo.ProductInfo;
+import com.bjpowernode.vo.SelectVo;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -18,4 +19,7 @@ public interface ProductService {
     int delete(int pid);
 
     int deletebatch(String[] ids);
+    public List<ProductInfo> SelectByEdition(SelectVo vo);
+
+    PageInfo PageSplit(SelectVo vo, int pageSize);
 }
