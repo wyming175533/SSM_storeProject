@@ -151,8 +151,9 @@ public class ProductController {
     }
     //单个删除
     @RequestMapping("/delete.action")
-    public ModelAndView delete(int pid,int page){
+    public ModelAndView delete(int pid,SelectVo vo,HttpSession session){
         ModelAndView mv=new ModelAndView();
+        session.setAttribute("vo",vo);
         int num=-1;
         try {
              num=productService.delete(pid);
@@ -161,18 +162,20 @@ public class ProductController {
         }
         if(num>0){
             mv.addObject("msg","删除成功");
-            mv.setViewName("forward:/prod/deleteAjaxsplit.action?page="+page);
+            mv.setViewName("forward:/prod/deleteAjaxsplit.action");
         }
         else{
             mv.addObject("msg","删除失败");
-            mv.setViewName("forward:/prod/deleteAjaxsplit.action?page="+page);
+            mv.setViewName("forward:/prod/deleteAjaxsplit.action");
 
         }
         return mv;
     }
 
     @RequestMapping("/deletebatch.action")
-    public ModelAndView deletebatch(String str,int page){
+    public ModelAndView deletebatch(String str,SelectVo vo,HttpSession session){
+        session.setAttribute("vo",vo);
+
         ModelAndView mv=new ModelAndView();
         String ids[]=str.split(",");
 
@@ -184,11 +187,11 @@ public class ProductController {
         }
         if(num>0){
             mv.addObject("msg","删除成功");
-            mv.setViewName("forward:/prod/deleteAjaxsplit.action?page="+page);
+            mv.setViewName("forward:/prod/deleteAjaxsplit.action");
         }
         else{
             mv.addObject("msg","删除失败");
-            mv.setViewName("forward:/prod/deleteAjaxsplit.action?page="+page);
+            mv.setViewName("forward:/prod/deleteAjaxsplit.action");
 
         }
 
@@ -198,8 +201,16 @@ public class ProductController {
 
     @ResponseBody
     @RequestMapping(value="/deleteAjaxsplit.action",produces = "text/html;charset=utf-8")
-    public Object deleteAjaxsplit(int page, HttpSession session,HttpServletRequest request){
-        PageInfo pageInfo=productService.pageSplit(page,PAGE_SIZE);
+    public Object deleteAjaxsplit( HttpSession session,HttpServletRequest request){
+        PageInfo pageInfo=null;
+        SelectVo vo= (SelectVo) session.getAttribute("vo");
+        if(vo!=null){
+            pageInfo=productService.PageSplit(vo,PAGE_SIZE);
+            request.getSession().removeAttribute("vo");
+        }
+       else{
+            pageInfo=productService.pageSplit(vo.getPage(),PAGE_SIZE);
+        }
         session.setAttribute("info",pageInfo);
         return request.getAttribute("msg");
     }

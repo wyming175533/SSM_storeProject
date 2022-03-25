@@ -64,6 +64,7 @@
         </select>&nbsp;&nbsp;&nbsp;
             价格：<input name="lprice" id="lprice">-<input name="hprice" id="hprice">
             <input type="button" value="查询" onclick="ajaxsplit()">
+
         </form>
     </div>
     <br>
@@ -181,7 +182,10 @@
 
     //批量删除
     function deleteBatch() {
-
+        var pname=$("#pname").val();
+        var typeid=$("#typeid").val();
+        var lprice=$("#lprice").val();
+        var hprice=$("#hprice").val();
             //取得所有被选中删除商品的pid
             var page="${info.pageNum}";
             var zhi=$("input[name=ck]:checked");
@@ -207,7 +211,11 @@
                         url:"${pageContext.request.contextPath}/prod/deletebatch.action",
                         data:{
                             "str":str,
-                            "page":page
+                            "page":page,
+                            "pname":pname,
+                            "typeid":typeid,
+                            "lprice":lprice,
+                            "hprice":hprice
                         },
                         type:"post",
                         dataType: "text",
@@ -227,13 +235,21 @@
     }
     //单个删除
     function del(pid,page) {
+        var pname=$("#pname").val();
+        var typeid=$("#typeid").val();
+        var lprice=$("#lprice").val();
+        var hprice=$("#hprice").val();
         if (confirm("确定删除吗")) {
           //向服务器提交请求完成删除
             $.ajax({
                 url:"${pageContext.request.contextPath}/prod/delete.action",
                 data:{
                     "pid":pid,
-                    "page":page
+                    "page":page,
+                    "pname":pname,
+                    "typeid":typeid,
+                    "lprice":lprice,
+                    "hprice":hprice
                 },
                 type:"post",
                 dataType:"text",
