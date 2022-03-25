@@ -11,8 +11,10 @@
     <script type="text/javascript">
         if ("${msg}" != "") {
             alert("${msg}");
+            ${msg}="";
         }
     </script>
+
 
     <c:remove var="msg"></c:remove>
 
@@ -109,7 +111,7 @@
                                             onclick="one(${p.pId},${info.pageNum})">编辑
                                     </button>
                                     <button type="button" class="btn btn-warning" id="mydel"
-                                            onclick="del(${p.pId})">删除
+                                            onclick="del(${p.pId},${info.pageNum})">删除
                                     </button>
                                 </td>
                             </tr>
@@ -206,10 +208,24 @@ alert(str+"11111111");
         }
     }
     //单个删除
-    function del(pid) {
+    function del(pid,page) {
         if (confirm("确定删除吗")) {
           //向服务器提交请求完成删除
-            window.location="${pageContext.request.contextPath}/prod/delete.action?pid="+pid;
+            $.ajax({
+                url:"${pageContext.request.contextPath}/prod/delete.action",
+                data:{
+                    "pid":pid,
+                    "page":page
+                },
+                type:"post",
+                dataType:"text",
+                success:function (data){
+                    alert(data);
+                    $("#table").load("http://localhost:8080/SSM_storeProject/admin/product.jsp #table");
+
+                }
+
+            })
         }
     }
 

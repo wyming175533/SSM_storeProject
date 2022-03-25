@@ -22,6 +22,7 @@
             <tx:method name="*find*" read-only="true"/>
             <tx:method name="*search*" read-only="true"/>
             <tx:method name="*get*" read-only="true"/>
+            <tx:method name="*save*" propagation="REQUIRED"/>
             <tx:method name="*insert*" propagation="REQUIRED"/>
             <tx:method name="*create*" propagation="REQUIRED"/>
             <tx:method name="*update*" propagation="REQUIRED"/>

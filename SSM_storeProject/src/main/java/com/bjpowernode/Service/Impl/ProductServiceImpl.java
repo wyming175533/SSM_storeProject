@@ -4,6 +4,7 @@ import com.bjpowernode.Service.ProductService;
 import com.bjpowernode.mapper.ProductInfoMapper;
 import com.bjpowernode.pojo.ProductInfo;
 import com.bjpowernode.pojo.ProductInfoExample;
+import com.bjpowernode.pojo.ProductTypeExample;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +31,37 @@ public class ProductServiceImpl implements ProductService {
           return pageInfo;
 
     }
+
+    @Override
+    public int save(ProductInfo productInfo) {
+
+       int num= productInfoMapper.insert(productInfo);
+        return num;
+    }
+
+    @Override
+    public ProductInfo getInfoById(int pid) {
+        ProductInfoExample example=new ProductInfoExample();
+        example.createCriteria().andPIdEqualTo(pid);
+        List<ProductInfo> list=  productInfoMapper.selectByExample(example);
+        if(list.size()>0)
+            return list.get(0);
+        return null;
+    }
+
+    @Override
+    public int updateById(ProductInfo productInfo) {
+        ProductInfoExample example=new ProductInfoExample();
+        example.createCriteria().andPIdEqualTo(productInfo.getpId());
+        int num=productInfoMapper.updateByExample(productInfo,example);
+
+        return num;
+    }
+
+    @Override
+    public int delete(int pid) {
+        int num=productInfoMapper.deleteByPrimaryKey(pid);
+        return num;
+    }
+
 }

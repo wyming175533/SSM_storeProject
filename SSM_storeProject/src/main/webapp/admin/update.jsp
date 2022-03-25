@@ -22,19 +22,18 @@
 				function fileChange(){//注意：此处不能使用jQuery中的change事件，因此仅触发一次，因此使用标签的：onchange属性
 
 					$.ajaxFileUpload({
-						url: "${pageContext.request.contextPath}/prod/ajaxImg.action",//用于文件上传的服务器端请求地址
-						secureuri: false,//一般设置为false,开启安全相关
+						url: '${pageContext.request.contextPath}/prod/ajaxImg.action',//用于文件上传的服务器端请求地址
+						secureuri: false,//一般设置为false
 						fileElementId: 'pimage',//文件上传控件的id属性  <input type="file" id="pimage" name="pimage" />
-						type:get,
 						dataType: 'json',//返回值类型 一般设置为json
 						success: function(obj) //服务器成功响应处理函数
 						{
-
+							alert(obj);
 							$("#imgDiv").empty();  //清空原有数据
 							//创建img 标签对象
 							var imgObj = $("<img>");
 							//给img标签对象追加属性
-							imgObj.attr("src","/image_big/"+obj.imgurl);
+							imgObj.attr("src","${pageContext.request.contextPath}/image_big/"+obj.imgurl);
 							imgObj.attr("width","100px");
 							imgObj.attr("height","100px");
 							//将图片img标签追加到imgDiv末尾
@@ -47,6 +46,7 @@
 							alert(e.message);
 						}
 					});
+
 				}
 			</script>
 <script type="text/javascript">
@@ -91,7 +91,7 @@
 						
 						<tr>
 							<td class="one">图片介绍</td>
-							<td> <br><div id="imgDiv" style="display:block; width: 40px; height: 50px;"><img src="/image_big/${prod.pImage}" width="100px" height="100px" ></div><br><br><br><br>
+							<td> <br><div id="imgDiv" style="display:block; width: 40px; height: 50px;"><img src="${pageContext.request.contextPath}/image_big/${prod.pImage}" width="100px" height="100px" ></div><br><br><br><br>
 								<input type="file" id="pimage" name="pimage" onchange="fileChange()">
 								<span id="imgName"></span><br>
 
