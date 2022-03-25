@@ -14,7 +14,7 @@
         <property name="prefix" value="/admin/"/>
         <property name="suffix" value=".jsp"/>
      </bean>
-<!--    文件上传器 CRM-->
+<!--    文件上传器 CMR-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 
     </bean>

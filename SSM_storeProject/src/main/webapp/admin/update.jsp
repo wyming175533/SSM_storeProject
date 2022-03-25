@@ -22,9 +22,10 @@
 				function fileChange(){//注意：此处不能使用jQuery中的change事件，因此仅触发一次，因此使用标签的：onchange属性
 
 					$.ajaxFileUpload({
-						url: '/prod/ajaxImg.action',//用于文件上传的服务器端请求地址
-						secureuri: false,//一般设置为false
+						url: "${pageContext.request.contextPath}/prod/ajaxImg.action",//用于文件上传的服务器端请求地址
+						secureuri: false,//一般设置为false,开启安全相关
 						fileElementId: 'pimage',//文件上传控件的id属性  <input type="file" id="pimage" name="pimage" />
+						type:get,
 						dataType: 'json',//返回值类型 一般设置为json
 						success: function(obj) //服务器成功响应处理函数
 						{

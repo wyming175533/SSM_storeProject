@@ -111,6 +111,12 @@
       <artifactId>druid</artifactId>
       <version>${druid.version}</version>
     </dependency>
+    <dependency>
+<!--      上传文件用这个json更方便-->
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20140107</version>
+    </dependency>
 
     <!-- junit -->
     <dependency>

@@ -93,7 +93,7 @@
                             <th>商品数量</th>
                             <th>操作</th>
                         </tr>
-                        <c:forEach items="${list}" var="p">
+                        <c:forEach items="${info.list}" var="p">
                             <tr>
                                 <td valign="center" align="center"><input type="checkbox" name="ck" id="ck" value="${p.pId}" onclick="ckClick()"></td>
                                 <td>${p.pName}</td>
@@ -228,7 +228,7 @@ alert(str+"11111111");
             success:function () {
                 //重新加载分页显示的组件table
                 //location.href---->http://localhost:8080/admin/login.action
-                $("#table").load("http://localhost:8080/admin/product.jsp #table");
+                $("#table").load("http://localhost:8080/SSM_storeProject/admin/product.jsp #table");
             }
         })
     };
